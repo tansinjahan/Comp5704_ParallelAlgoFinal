@@ -1,0 +1,27 @@
+ #tx = cuda.threadIdx.x
+    #ty = cuda.threadIdx.y
+    #bx = cuda.blockIdx.x
+    #by = cuda.blockIdx.y
+    #bw = cuda.blockDim.x
+    #bh = cuda.blockDim.y
+    #x = tx + bx * bw
+    #y = ty + by * bh
+    
+    # mn = 0
+    # if x >= n or y >= n:
+    #     return
+    # C[y, x] = 0
+    # for i in range(n):
+    #     C[y, x] = A[y, i] + B[i, x]
+    #     A[i,:]
+    
+    # mn = 0
+    # mx = 100
+    # for t in range(mn,mx,1):
+    #     C = np.multiply((1 - t), A) + np.multiply(t, B)
+    #return new_z
+    row, col = cuda.grid(2)
+    if row < C.shape[0] and col < C.shape[1]:
+        for k in range(A.shape[1]):
+            tmp = (1-t) * A[row, k] + t * B[row, k]
+            C[row, k] = tmp
